@@ -1,6 +1,6 @@
 # nl.hollandopensource.sepatxmessagetokens
 
-This module uses [CiviSEPA's `hook_civicrm_modify_txmessage`](https://github.com/Project60/org.project60.sepa#customisation) to pass the Transaction Message through [CiviCRM's new token processor](https://docs.civicrm.org/dev/en/latest/framework/token/#token-processor).
+This [CiviCRM](https://civicrm.org) module uses [CiviSEPA's `hook_civicrm_modify_txmessage`](https://github.com/Project60/org.project60.sepa#customisation) to pass the Transaction Message through [CiviCRM's new token processor](https://docs.civicrm.org/dev/en/latest/framework/token/#token-processor).
 
 The following tokens are added:
 
