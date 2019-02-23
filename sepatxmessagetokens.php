@@ -41,20 +41,18 @@ function sepatxmessagetokens_civicrm_container(&$container) {
 
 function sepatxmessagetokens_register_tokens(\Civi\Token\Event\TokenRegisterEvent $e) {
   $e->entity('sepa')
-    ->register('frequencyUnit',     ts('Frequency Unit'))
     ->register('frequencyInterval', ts('Frequency Interval'))
     ->register('financialTypeId',   ts('Financial Type Id'));
 }
 
 function sepatxmessagetokens_evaluate_tokens(\Civi\Token\Event\TokenValueEvent $e) {
   foreach ($e->getRows() as $row) {
-    $frequency_unit     = 'n/a';
     $frequency_interval = 'n/a';
     $financial_type_id  = 'n/a';
 
     if ($row->context['entity_table'] == "civicrm_contribution_recur") {
       $result = civicrm_api3('ContributionRecur', 'get', array(
-        'return' => array("frequency_unit", "frequency_interval", "financial_type_id"),
+        'return' => array("frequency_interval", "financial_type_id"),
         'id' => $row->context['entity_id'],
       ));
     } else {
@@ -68,9 +66,6 @@ function sepatxmessagetokens_evaluate_tokens(\Civi\Token\Event\TokenValueEvent $
 
       /** @var TokenRow $row */
       $row->format('text/html');
-      if (array_key_exists('frequency_unit', $result)) {
-        $frequency_unit     = $result['frequency_unit'];
-      }
       if (array_key_exists('frequency_interval', $result)) {
         $frequency_interval = $result['frequency_interval'];
       }
@@ -78,7 +73,6 @@ function sepatxmessagetokens_evaluate_tokens(\Civi\Token\Event\TokenValueEvent $
         $financial_type_id  = $result['financial_type_id'];
       }
     }
-    $row->tokens('sepa', 'frequencyUnit',     $frequency_unit);
     $row->tokens('sepa', 'frequencyInterval', $frequency_interval);
     $row->tokens('sepa', 'financialTypeId',   $financial_type_id);
   }
